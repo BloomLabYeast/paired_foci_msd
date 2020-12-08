@@ -10,7 +10,10 @@ function coord_mat = parse_csv_pair(directory, paired_cell)
 %       pair.
 %
 %   output :
-%       coord_mat : A 3D matrix...
+%       coord_mat : A 3D matrix where each row represents a time point and
+%       each column represents the x and y dimension respectively, the
+%       third dimension represents an individual timelapse of a yeast cell.
+%       
 %
 %   NOTE : This function assumes the XY coordinates are in columns 5 and 6
 %   of the input CSV-files. The column order is set by TrackMate.
@@ -22,3 +25,12 @@ for i = 1:size(paired_cell, 1)
     xy2 = mat2(:,5:6);
     coord_mat(:,:,i) = xy1 - xy2;
 end
+% subtracting out motion that happens to both RFP and GFP.
+% For iterations, 1 through the size of the first dimension of
+% paired_cell, readmatrix produces a standard array labeled mat1 with
+% standardized file separators for paired_cell: i rows, column 1. Directory
+% specifies the directory that the files contained in paired_cell are in. xy1 is a standard array
+% produced from all rows from mat1 and columns 5 through 6 from mat 1. The
+% same is done for mat2 and xy2 but uses the second column of files
+% specified by paired_cell. coord_mat creates a matrix subtracting xy2 form
+% xy1, i is used to specify the 3rd dimension of the matrix (each page). 
