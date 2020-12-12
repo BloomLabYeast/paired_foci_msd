@@ -18,13 +18,13 @@ for i = 1:size(coord_mat, 3)
         msd_mat(i,tau) = mean(dist_sq);
     end
 end
-%A for loop within a for loop (nested). i represents 1 through 
+%A for loop within a for loop. i represents 1 through 
 %the size of the third dimension of coord_mat. tau is defined as 1 through
 %the size of the first dimension of coord_mat - 1. sub_coords takes values 
 %from 1 + tau through the end of the rows on coord_mat, all columns of 
 %coord_mat, and all "pages" or iterations of coord_mat and subtracts 1 - tau
 %through the end of the rows on coord_mat, all columns of coord_mat, 
 %and all "pages" or iterations of coord_mat.  
-%sub_coords are squared elementwise and their values are summed in the 
-%second column. The mean is taken from dist_sq values, giving msd_mat
-%for each iteration and value of tau. 
+%sub_coords are squared elementwise and their values are summed in the second column.
+%The mean is taken from dist_sq values, giving msd_mat for each iteration 
+%and value of tau. 
