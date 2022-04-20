@@ -1,4 +1,4 @@
-function coord_mat = parse_csv_pair(directory, paired_cell)
+function coord_mat = parse_csv_pair_scatter(directory, paired_cell)
 %%parse_csv_pair Parse csv file pairs and return subtracted coordinate mat.
 %
 %   input :
@@ -19,12 +19,30 @@ function coord_mat = parse_csv_pair(directory, paired_cell)
 %   of the input CSV-files. The column order is set by TrackMate.
 
 for i = 1:size(paired_cell, 1)
-    mat1 = readmatrix(fullfile(directory, paired_cell{i,1}));
+    mat1i = readmatrix(fullfile(directory, paired_cell{i,1}));
+    mat1i(1,:) = [];
+    mat1 = sortrows(mat1i,9);
     xy1 = mat1(:,5:6);
-    mat2 = readmatrix(fullfile(directory, paired_cell{i,2}));
+    mat2i = readmatrix(fullfile(directory, paired_cell{i,2}));
+    mat2i(1,:) = [];
+    mat2 = sortrows(mat2i,9);
     xy2 = mat2(:,5:6);
     coord_mat(:,:,i) = xy1 - xy2;
 end
+coord_mat = coord_mat*0.065;
+figure;
+hold on
+for ii = 1:i
+   %w = waitforbuttonpress;
+    scatter(coord_mat(:,1,ii)-mean(coord_mat(:,1,ii)),coord_mat(:,2,ii)-mean(coord_mat(:,2,ii)))
+   
+   xlim([-2 2])
+   ylim([-2 2])
+   
+  title(['Metaphase Cells n = ',sprintf('%d',ii),])
+end
+hold off
+
 % subtracting out motion that happens to both RFP and GFP.
 % For iterations, 1 through the size of the first dimension of
 % paired_cell, readmatrix produces a standard array labeled mat1 with
@@ -32,5 +50,5 @@ end
 % specifies the directory that the files contained in paired_cell are in. xy1 is a standard array
 % produced from all rows from mat1 and columns 5 through 6 from mat 1. The
 % same is done for mat2 and xy2 but uses the second column of files
-% specified by paired_cell. coord_mat creates a matrix subtracting xy2 form
+% specified by paired_cell. coord_mat creates a matrix subtracting xy2 from
 % xy1, i is used to specify the 3rd dimension of the matrix (each page). 

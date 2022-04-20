@@ -1,4 +1,4 @@
-function msd_mat = batch_msd(input_dir, pattern1, pattern2)
+function stat_coord_mat = batch_msd_scatter(input_dir, pattern1, pattern2)
 %%batch_msd calculates the msd for paired foci
 %
 %   input :
@@ -19,5 +19,5 @@ function msd_mat = batch_msd(input_dir, pattern1, pattern2)
 %       one timepoint. 
 %       
 paired_cell = csv_pair(input_dir, pattern1, pattern2);
-coord_mat = parse_csv_pair(input_dir, paired_cell);
-msd_mat = calc_paired_msd(coord_mat);
+coord_mat = parse_csv_pair_scatter(input_dir, paired_cell);
+stat_coord_mat = calc_mean_var(coord_mat);
