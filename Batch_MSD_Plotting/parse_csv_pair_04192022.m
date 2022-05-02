@@ -1,4 +1,5 @@
-function coord_mat = parse_csv_pair_Rc(directory, paired_cell)
+%%%%% Original parse_csv_pair FROM JOSH %%%%% Edited by: John
+function coord_mat = parse_csv_pair_04192022(directory, paired_cell)
 %%parse_csv_pair Parse csv file pairs and return subtracted coordinate mat.
 %
 %   input :
@@ -17,6 +18,12 @@ function coord_mat = parse_csv_pair_Rc(directory, paired_cell)
 %
 %   NOTE : This function assumes the XY coordinates are in columns 5 and 6
 %   of the input CSV-files. The column order is set by TrackMate.
+%
+%
+%Edited by John 04192022
+%TrackMate v7.6.1 has a different format for .csv file arrays and these 
+%changes account for the added row and sort the array by frame index
+%in descending order (1,2,3,etc.).
 
 for i = 1:size(paired_cell, 1)
     mat1i = readmatrix(fullfile(directory, paired_cell{i,1}));
@@ -29,7 +36,6 @@ for i = 1:size(paired_cell, 1)
     xy2 = mat2(:,5:6);
     coord_mat(:,:,i) = xy1 - xy2;
 end
-coord_mat = coord_mat*0.065;
 % subtracting out motion that happens to both RFP and GFP.
 % For iterations, 1 through the size of the first dimension of
 % paired_cell, readmatrix produces a standard array labeled mat1 with

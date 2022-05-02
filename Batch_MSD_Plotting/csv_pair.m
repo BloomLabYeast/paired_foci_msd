@@ -1,6 +1,7 @@
+%%%%% FROM JOSH %%%%%
 function paired_cell = csv_pair(input_dir, pattern1, pattern2)
 %%csv_pair Parses all the csv files in a given directory and pairs them.
-%
+% 
 %   input : 
 %       input_dir : A character array that specifies the directory to be
 %       parsed for csv-files.

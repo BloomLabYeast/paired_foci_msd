@@ -1,0 +1,31 @@
+function stat_coord_mat = calc_mean_var(coord_mat)
+%calc_mean_var 
+%
+%   input :
+%       coord_mat : A 3D matrix where each row represents a time point and
+%       each column represents the x and y dimension respectively, the
+%       third dimension represents an individual timelapse of a yeast cell.
+%
+%   output :                        
+%       stat_coord_mat : A 2x1 matrix where the first column represents the
+%       mean variance across all cells and the second column represents the
+%       grand mean.
+%
+% 
+%       
+
+
+%a = sqrt(coord_mat(:,1,:).^2 + coord_mat(:,2,:).^2);
+[muHatx,sigmaHatx] = normfit((coord_mat(:,1,:)) - mean(mean(coord_mat(:,1,:))));
+[muHaty,sigmaHaty] = normfit((coord_mat(:,2,:)) - mean(mean(coord_mat(:,2,:))));
+sigmaxsq = mean(sigmaHatx.^2);
+sigmaysq = mean(sigmaHaty.^2);
+%mux = mean(muHatx);
+%muy = mean(muHaty);
+meanx = mean(coord_mat(:,1,:));
+meany = mean(coord_mat(:,2,:));
+sigmasq = mean([sigmaxsq sigmaysq]);
+%mu = mean([mux^2 muy^2]);
+mu = mean(squeeze(squeeze(meanx)).^2 + squeeze(squeeze(meany)).^2);
+
+stat_coord_mat = [sigmasq mu];

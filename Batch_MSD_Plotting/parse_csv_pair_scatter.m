@@ -1,5 +1,7 @@
-function coord_mat = parse_csv_pair_scatter(directory, paired_cell)
-%%parse_csv_pair Parse csv file pairs and return subtracted coordinate mat.
+function coord_mat = parse_csv_pair_scatter(directory, paired_cell,cellstage)
+%%parse_csv_pair_scatter Parse csv file pairs and return subtracted
+%%coordinate matrix and a plot of the variance of all distances centered on the mean
+%%distance for each cell. 
 %
 %   input :
 %       directory : A character array specifying the location of the files
@@ -14,6 +16,8 @@ function coord_mat = parse_csv_pair_scatter(directory, paired_cell)
 %       each column represents the x and y dimension respectively, the
 %       third dimension represents an individual timelapse of a yeast cell.
 %       
+%       figure: variance plot of paired foci distance for all cells
+%       with the origin centered on the mean distance for each cell. 
 %
 %   NOTE : This function assumes the XY coordinates are in columns 5 and 6
 %   of the input CSV-files. The column order is set by TrackMate.
@@ -39,7 +43,7 @@ for ii = 1:i
    xlim([-2 2])
    ylim([-2 2])
    
-  title(['Metaphase Cells n = ',sprintf('%d',ii),])
+  title([ cellstage ' cells n = ',sprintf('%d',ii),])
 end
 hold off
 
