@@ -13,11 +13,14 @@ function plot_all_msd = all_msd_plot(msd_mat,cellstage)
 %timepoint (check timescale)
 transpose_mat = msd_mat';
 scale_mat = transpose_mat*0.065*0.065;
-
-plot_all_msd = plot(scale_mat);
 for ii = 1:size(msd_mat,1)
+%w = waitforbuttonpress;
+plot_all_msd = plot(scale_mat(:,ii));
+hold on;
+ylim([0,5]);
 title([ cellstage ' cells n = ',sprintf('%d',ii),])
 end
+
 xlabel('\tau (s)')
 ylabel('MSD (\mum^2)')
 %ylim([0,4])
